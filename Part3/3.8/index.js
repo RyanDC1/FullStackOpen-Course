@@ -13,7 +13,7 @@ app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 
-let notes = [
+let contacts = [
     {
         "id": 1,
         "name": "Arto Hellas",
@@ -37,27 +37,27 @@ let notes = [
 ]
 
 const generateUniqueId = () => {
-    const maxId = notes.length > 0 ? Math.max(...notes.map(s => s.id)) : -1
+    const maxId = contacts.length > 0 ? Math.max(...contacts.map(s => s.id)) : -1
     return maxId + 1
 }
 
 app.get('/info', (request, response) => {
-    response.send(`Phonebook has info for ${notes.length} people <br/> ${new Date()}`)
+    response.send(`Phonebook has info for ${contacts.length} people <br/> ${new Date()}`)
 })
 
 app.get('/api/persons', (request, response) => {
-    response.json(notes)
+    response.json(contacts)
 })
 
 app.get('/api/persons/:id', (request, response) => {
-    const noteId = request.params.id
-    const note = notes.find(s => String(s.id) === noteId)
-    if (note) {
-        response.json(note)
+    const contactId = request.params.id
+    const contact = contacts.find(s => String(s.id) === contactId)
+    if (contact) {
+        response.json(contact)
     }
     else {
         response.status(404).json({
-            error: 'Note not found'
+            error: 'Contact not found'
         })
     }
 })
@@ -72,7 +72,7 @@ app.post('/api/persons', (request, response) => {
         })
     }
 
-    const personExists = notes.find(s => s.name === name)
+    const personExists = contacts.find(s => s.name === name)
     if(personExists)
     {
         return response.status(400).json({
@@ -82,18 +82,18 @@ app.post('/api/persons', (request, response) => {
 
     const id = generateUniqueId()
 
-    notes.push({
+    contacts.push({
         name,
         number,
         id
     })
 
-    response.json(notes)
+    response.json(contacts)
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const noteId = request.params.id
-    notes = notes.filter(s => String(s.id) !== noteId)
+    const contactId = request.params.id
+    contacts = contacts.filter(s => String(s.id) !== contactId)
 
-    response.json(notes)
+    response.json(contacts)
 })
