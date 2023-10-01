@@ -4,7 +4,7 @@ const cors = require('cors')
 
 const app = express()
 const PORT = 3001
-
+ 
 morgan.token('request', (request) => ['POST', 'PUT'].includes(request.method) ? JSON.stringify(request.body) : " ")
 
 app.use(cors())
