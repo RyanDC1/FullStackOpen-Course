@@ -31,6 +31,7 @@ const App = () => {
         onCreate={onCreate}
         onUpdate={onUpdate}
         onUpdateFailed={onUpdateFailed}
+        onCreateFailed={onCreateFailed}
       />
 
       <h2>Numbers</h2>
@@ -67,6 +68,10 @@ const App = () => {
       showNotification(`Failed to update contact ${contact.name}`, StatusTypes.ERROR)
     }
       
+  }
+
+  function onCreateFailed(contact, error) {
+    showNotification(error?.response?.data?.message ?? "Error occurred while creating", StatusTypes.ERROR)
   }
 
   function showNotification(message, status, timeout = 5000) {

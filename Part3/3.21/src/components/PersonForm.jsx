@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ContactService from '../services/ContactService'
 
-export default function PersonForm({ persons = [], onCreate, onUpdate, onUpdateFailed }) {
+export default function PersonForm({ persons = [], onCreate, onUpdate, onUpdateFailed, onCreateFailed }) {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
 
@@ -68,6 +68,7 @@ export default function PersonForm({ persons = [], onCreate, onUpdate, onUpdateF
         })
         .catch((error) => {
             console.error("An error occurred while creating the contact: ", error)
+            onCreateFailed(contact, error)
         })
     }
 
