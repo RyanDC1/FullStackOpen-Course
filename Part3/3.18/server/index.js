@@ -18,27 +18,23 @@ app.listen(PORT, () => {
 })
 
 
-app.get('/api/info', (request, response) => {
+app.get('/api/info', (request, response, next) => {
     personService.count()
     .then((result) => {
         response.send(`Phonebook has info for ${result} people <br/> ${new Date()}`)
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
     personService.find({})
     .then((result) => {
         response.json(result)
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     personService.findById(request.params.id)
     .then((contact) => {
         if (contact) {
@@ -50,16 +46,15 @@ app.get('/api/persons/:id', (request, response) => {
             })
         }
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const { name, number } = request.body || {}
 
-    if(name == null || number == null)
+    if(name.trim() == "" || number.trim() == "")
     {
+        next({ message: "Invalid post data, name and number are required"})
         return response.status(400).json({
             error: "Invalid post data, name and number are required"
         })
@@ -83,27 +78,21 @@ app.post('/api/persons', (request, response) => {
             .then((result) => {
                 response.json(result)
             })
-            .catch((error) => {
-                console.log(error)
-            })
+            .catch((error) => next(error))
         }
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
     personService.findByIdAndUpdate(request.body.id, { number: request.body.number })
     .then((result) => {
         response.json(result)
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     personService.findByIdAndDelete(request.params.id)
     .then((result) => {
         if(result != null)
@@ -116,13 +105,22 @@ app.delete('/api/persons/:id', (request, response) => {
             response.status(404).json({
                 message: "Contact Not Found"
             })
+            throw new Error("Contact Not Found")
         }
     })
-    .catch((error) => {
-        console.log(error)
-    })
+    .catch((error) => next(error))
 })
 
-app.use(function(req, res){
-   res.sendStatus(404).end();
-});
+const notFound = function(req, res){
+    res.sendStatus(404).end();
+}
+
+app.use(notFound);
+
+const errorLogging = function(error, request, response, next){
+    console.error(`${new Date().toUTCString()} ::: LOG_ERROR :::`, error.message)
+    return
+}
+
+app.use(errorLogging)
+
