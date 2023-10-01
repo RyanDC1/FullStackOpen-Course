@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:3001/api'
+export const baseUrl = import.meta.env.VITE_PHONEBOOK_API
 
 export const apiRoutes = {
     persons: {

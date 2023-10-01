@@ -7,6 +7,7 @@ const PORT = 3001
  
 morgan.token('request', (request) => ['POST', 'PUT'].includes(request.method) ? JSON.stringify(request.body) : " ")
 
+app.use(express.static('dist'))
 app.use(cors())
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :request'))
@@ -43,7 +44,7 @@ const generateUniqueId = () => {
     return maxId + 1
 }
 
-app.get('/info', (request, response) => {
+app.get('/api/info', (request, response) => {
     response.send(`Phonebook has info for ${notes.length} people <br/> ${new Date()}`)
 })
 
