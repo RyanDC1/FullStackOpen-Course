@@ -13,8 +13,7 @@ if (process.argv.length<3) {
   const number = process.argv[4]
 
   const url = process.env.mongoDbUrl.replace("<password>", password)
-  console.log(url)
-  // mongoose.set('strictQuery', false)
+  mongoose.set('strictQuery', true) // only allow fields defined in schema
 
   mongoose.connect(url)
 
@@ -41,7 +40,6 @@ if (process.argv.length<3) {
   }
   else {
     personModel.find({}).then((response) => {
-      console.log(response)
       response.forEach(person => {
         console.log(`${person.name} ${person.number}`)
       })
