@@ -6,7 +6,7 @@ const personService = require('./models/person')
 const app = express()
 const PORT = 3001
  
-morgan.token('request', (request) => ['POST', 'PUT'].includes(request.method) ? JSON.stringify(request.body) : " ")
+morgan.token('request', (request) => ['POST', 'PUT'].includes(request.method) ? JSON.stringify(request.body) : ' ')
 
 app.use(express.static('dist'))
 app.use(cors())
@@ -52,11 +52,11 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
     const { name, number } = request.body || {}
 
-    if(name.trim() == "" || number.trim() == "")
+    if(name.trim() == '' || number.trim() == '')
     {
-        next({ message: "Invalid post data, name and number are required"})
+        next({ message: 'Invalid post data, name and number are required'})
         return response.status(400).json({
-            error: "Invalid post data, name and number are required"
+            error: 'Invalid post data, name and number are required'
         })
     }
 
@@ -98,24 +98,24 @@ app.delete('/api/persons/:id', (request, response, next) => {
         if(result != null)
         {
             response.status(204).json({
-                message: "Contact Deleted"
+                message: 'Contact Deleted'
             })
         }
         else {
             response.status(404).json({
-                message: "Contact Not Found"
+                message: 'Contact Not Found'
             })
-            throw new Error("Contact Not Found")
+            throw new Error('Contact Not Found')
         }
     })
     .catch((error) => next(error))
 })
 
 const notFound = function(req, res){
-    res.sendStatus(404).end();
+    res.sendStatus(404).end()
 }
 
-app.use(notFound);
+app.use(notFound)
 
 const errorLogging = function(error, request, response, next){
     console.log(error.name)
