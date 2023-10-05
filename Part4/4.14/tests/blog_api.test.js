@@ -1,7 +1,7 @@
 const supertest = require('supertest')
 const app = require('../App')
 const mongoose = require('mongoose')
-const { getRandomId, getTotal } = require('./blog_helper')
+const { getRandomId, getTotal, getRandomBlog } = require('./blog_helper')
 const Blog = require('../models/Blog')
 require('./blog_helper')
 
@@ -83,6 +83,56 @@ describe('Blog Test Create', () => {
 
         await api.post(root).send(newBlog)
         .expect(400)
+    })
+})
+
+describe('Blog Test Delete', () => {
+    test('Delete blog', async () => {
+        const blogId = getRandomId()
+        await api.delete(`${root}/${blogId}`)
+        .expect(204)
+
+        await api.get(`${root}/${blogId}`)
+        .expect(404)
+    })
+
+    test('Delete blog - that does not exist', async () => {
+        const blogId = '651a5f6cd9edf5b6fba45ed2'
+        await api.delete(`${root}/${blogId}`)
+        .expect(404)
+    })
+})
+
+describe('Blog Test Update', () => {
+    test('Update blog', async () => {
+        let blog = getRandomBlog()
+        blog = {
+            ...blog,
+            likes: blog.likes + 1
+        }
+
+        await api.put(`${root}/${blog.id}`).send(blog)
+        .expect(200)
+
+        const updatedBlog = await api.get(`${root}/${blog.id}`)
+        expect(updatedBlog.body.likes).toBe(blog.likes)
+    })
+
+    test('Update blog - that does not exist', async () => {
+        let blog = getRandomBlog()
+        let blogId = '651a5f6cd9edf5b6fba45ed2'
+        blog = {
+            ...blog,
+            id: blogId,
+            likes: blog.likes + 1
+        }
+
+        await api.put(`${root}/${blog.id}`).send(blog)
+        .expect(404)
+
+        // Make sure blog does not get created if absent
+        await api.get(`${root}/${blogId}`)
+        .expect(404)
     })
 })
 

@@ -23,7 +23,7 @@ const errorhandler = (error, request, response) => {
       return response.status(400).json({ error: error.message })
     }
   
-    next(error)
+    return response.status(500).json({ error: 'Server could not process the request' })
 }
 
 module.exports = {
