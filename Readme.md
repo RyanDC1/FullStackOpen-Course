@@ -7,6 +7,7 @@ Each course submission is present in a separate directory under this repository,
 
 ## Course Completion Certificate
 ![course certificate](/certificate-fullstack.png)
+[Certificate URL](https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/ba8b5aded18fc33a664919c3501e4ebc)
 
 
 ## Course Info
