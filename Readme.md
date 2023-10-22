@@ -5,9 +5,14 @@ https://fullstackopen.com/en/
 Each course submission is present in a separate directory under this repository, directories named as Part 0 , Part 1 ...etc.
 
 
-## Course Completion Certificate
+## Course Completion Certificates
+### Full-Stack
 ![course certificate](/certificate-fullstack.png)
 [Certificate URL](https://studies.cs.helsinki.fi/stats/api/certificate/fullstackopen/en/ba8b5aded18fc33a664919c3501e4ebc)
+
+### GraphQL
+![course certificate](/certificate-graphql.png)
+[Certificate URL](https://studies.cs.helsinki.fi/stats/api/certificate/fs-graphql/en/1f5aadb011e57ab5aad71aa096f79148)
 
 
 ## Course Info
@@ -49,4 +54,14 @@ Each course submission is present in a separate directory under this repository,
 ### Part 7: React router, custom hooks, styling app with CSS and webpack
 - Introduction to routing in React apps using React Router
 - Understanding how to create custom hooks in React
-- Learning about CSS-in-JS techniques and bundling with webpack1
+- Learning about CSS-in-JS techniques and bundling with webpack
+
+### Part 8: GraphQL
+- Introduction to GraphQL.
+- Implementing a GraphQL server using Apollo Server.
+- Using GraphQL with React via React Apollo.
+- Building a schema that describes the whole app structure.
+- Creating resolvers to compute and dispatch data for the schema.
+- Managing database and user administration with GraphQL.
+- Implementing login functionality and updating the cache.
+- Using fragments and subscriptions in GraphQL.
