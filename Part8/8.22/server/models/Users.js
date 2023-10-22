@@ -5,7 +5,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const schema = new mongoose.Schema({
     username: String,
     password: String,
-    favouriteGenre: String
+    favouriteGenre: [String]
 })
 
 schema.plugin(uniqueValidator)
